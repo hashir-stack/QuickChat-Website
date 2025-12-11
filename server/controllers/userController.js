@@ -1,3 +1,4 @@
+const { cloudinaryConnect } = require("../config/cloudinary");
 const { generateToken } = require("../libs/utils");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
@@ -50,7 +51,7 @@ exports.signup = async (req,res)=>{
             message:error.message
         });
     }
-}
+};
 
 // Controller for Login
 exports.login = async (req,res)=>{
@@ -87,4 +88,40 @@ exports.login = async (req,res)=>{
             message:error.message
         })
     }
-}
+};
+
+// Controller to check if user is authenticated
+exports.checkAuth = (req,res) =>{
+    res.json({success:true,user:req.user});
+};
+
+// controller to update user profile
+exports.updateProfile = async (req,res)=>{
+    try {
+        // fetcing the needed data from the reqests
+        const{bio,profilePic,fullName} = req.body;
+        const userId = req.user._id;
+
+        let updatedUser;
+        // if profilepic is only bio and fullName is updated
+        if(!profilePic){
+            updatedUser = await User.findByIdAndUpdate(userId,{bio,fullName},{new:true});
+        }else{
+            const upload = await cloudinaryConnect.uploader.upload(profilePic);
+            updatedUser = await User.findByIdAndUpdate(userId,{bio,fullName,profilePic:upload.secure_url},{new:true});
+        }
+
+        // success response
+        res.json({
+            success:true,
+            user:updatedUser,
+            message:"Profile is updated Successfully..."
+        });
+    } catch (error) {
+        console.log(error.message);
+        return res.json({
+            success:false,
+            message:error.message
+        })
+    }
+};
