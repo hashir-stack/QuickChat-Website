@@ -1,35 +1,45 @@
-
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 require("dotenv").config();
 
 // Middleware to protect the routes
-exports.protectRoute = async (req,res,next)=>{
-    try {
-        // fetching the token from header
-        const token = req.headers.token;
+exports.protectRoute = async (req, res, next) => {
+  try {
+    // fetching the token from header
+    const token = req.headers.token;
+    
+    // Look for token in Authorization header
+    // const authHeader = req.headers.authorization;
+    // const token = authHeader && authHeader.split(" ")[1]; // "Bearer <token>"
 
-        // decoding the user from token
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    // if (!token) {
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: "JWT token missing",
+    //   });
+    // }
 
-        // finding the user
-        const user = await User.findById(decoded.userId).select("-password");
+    // decoding the user from token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // validation for the user
-        if(!user){
-            return res.json({
-                success:false,
-                message:"User not found ..."
-            });
-        }
-        // if user is found
-        req.user = user;
-        next();
-    } catch (error) {
-        console.log(error);
-        return res.json({
-            success:false,
-            message:error.message
-        })
+    // finding the user
+    const user = await User.findById(decoded.userId).select("-password");
+
+    // validation for the user
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found ...",
+      });
     }
-}
+    // if user is found
+    req.user = user;
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

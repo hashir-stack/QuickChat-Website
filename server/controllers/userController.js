@@ -1,4 +1,4 @@
-const { cloudinaryConnect } = require("../config/cloudinary");
+const { cloudinaryConnect,cloudinary } = require("../config/cloudinary");
 const { generateToken } = require("../libs/utils");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
@@ -107,7 +107,7 @@ exports.updateProfile = async (req,res)=>{
         if(!profilePic){
             updatedUser = await User.findByIdAndUpdate(userId,{bio,fullName},{new:true});
         }else{
-            const upload = await cloudinaryConnect.uploader.upload(profilePic);
+            const upload = await cloudinary.uploader.upload(profilePic);
             updatedUser = await User.findByIdAndUpdate(userId,{bio,fullName,profilePic:upload.secure_url},{new:true});
         }
 

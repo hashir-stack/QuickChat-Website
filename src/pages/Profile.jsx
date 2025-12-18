@@ -1,19 +1,36 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ProfileIcon from "../assets/ProfileIcon.png";
 import { useNavigate } from 'react-router-dom';
 import Logo from "../assets/quickChatLogo.webp";
+import { AuthContext } from '../../context/AuthContext';
 
 const Profile = () => {
 
+  const {authUser,updateProfile} = useContext(AuthContext);
+
   const [selectedImg,setSelectedImg] = useState(null);
   const navigate = useNavigate();
-  const [name,setName] = useState("Martin Justin");
-  const [bio,setBio] = useState("Hey !! I am using QuickChat ...");
+  const [name,setName] = useState(authUser.fullName);
+  const [bio,setBio] = useState(authUser.bio);
 
   // submit function
   const handleSubmit = async(e) => {
     e.preventDefault();
-    navigate("/");
+
+    if(!selectedImg){
+      await updateProfile({fullName:name,bio});
+      navigate("/");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedImg);
+    reader.onload=async () =>{
+      const base64Image = reader.result;
+      await updateProfile({profilePic:base64Image,fullName:name,bio});
+      navigate("/");
+    }
+    
   }
   
 
@@ -57,7 +74,7 @@ const Profile = () => {
         </form>
 
         {/* right-side area */}
-        <img src={Logo} className='max-w-64 aspect-square rounded-full mx-10 max-sm:mt-10'/>
+        <img src={authUser?.profilePic||Logo} className={`max-w-64 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`}/>
       </div>
       
     </div>

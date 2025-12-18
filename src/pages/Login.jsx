@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Logo from "../assets/quickChatLogo.webp";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
 
@@ -11,6 +12,8 @@ const Login = () => {
   const[bio,setBio]=useState("");
   const[isDataSubmitted,setIsDataSubmitted]=useState(false);
 
+  const {login} = useContext(AuthContext);
+
   // Submit Function
   const onSubmitHandler = (e)=>{
     e.preventDefault();
@@ -18,6 +21,8 @@ const Login = () => {
       setIsDataSubmitted(true);
       return;
     }
+
+    login(currentState === "Sign Up" ? "signup" : "login",{fullName,email,bio,password})
   }
 
   return (

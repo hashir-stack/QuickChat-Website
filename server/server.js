@@ -2,7 +2,7 @@ const express = require("express");
 const cors= require("cors");
 require("dotenv").config();
 const http = require("http");
-const Server = require("socket.io");
+const { Server } = require("socket.io");
 
 // importing the db config
 const dbConnect = require("./config/dataBase.js");
@@ -32,16 +32,16 @@ io.on("connection",(socket)=>{
     console.log("User Connected" , userId);
 
     if(userId){
-        userSocketMap[userId]= socket.id;
+        exports.userSocketMap[userId]= socket.id;
     }
 
     // Emit online users to  all connected clinets
-    io.emit("getOnlineUsers",Object.keys(userSocketMap));
+    io.emit("getOnlineUsers",Object.keys(exports.userSocketMap));
 
     socket.on("disconnect",()=>{
         console.log("User Disconnected" , userId);
-        delete userSocketMap[userId];
-        io.emit("getOnlineUsers",Object.keys(userSocketMap))
+        delete exports.userSocketMap[userId];
+        io.emit("getOnlineUsers",Object.keys(exports.userSocketMap))
     })
     
 })

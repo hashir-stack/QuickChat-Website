@@ -3,7 +3,8 @@ import Logo from "../assets/quickChatLogo.webp";
 import { TiThMenu } from "react-icons/ti";
 import { FaSearch } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const dummyUser = [
   {
@@ -44,6 +45,8 @@ const dummyUser = [
 ];
 
 const SidebarContainer = ({ selectedUser, setSelectedUser }) => {
+
+  const {logout} = useContext(AuthContext);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -68,7 +71,9 @@ const SidebarContainer = ({ selectedUser, setSelectedUser }) => {
                 Edit Profile
               </p>
               <hr className="my-2 border-t border-gray-500" />
-              <p className="cursor-pointer text-sm">Logout</p>
+              <p 
+              onClick={()=>logout()}
+              className="cursor-pointer text-sm">Logout</p>
             </div>
           </div>
           {/* Menu toggle */}
