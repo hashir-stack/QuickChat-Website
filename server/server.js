@@ -50,6 +50,10 @@ app.use("/api/status", (req, res) => {
 app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoutes);
 
-server.listen(PORT, () => {
+if(process.env.NODE_ENV !== "production"){
+  server.listen(PORT, () => {
   console.log(`Server is successfully running on ${PORT}...`);
-});
+  });
+}
+// export server for vercel
+module.exports = server;
