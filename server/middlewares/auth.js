@@ -8,17 +8,6 @@ exports.protectRoute = async (req, res, next) => {
     // fetching the token from header
     const token = req.headers.token;
     
-    // Look for token in Authorization header
-    // const authHeader = req.headers.authorization;
-    // const token = authHeader && authHeader.split(" ")[1]; // "Bearer <token>"
-
-    // if (!token) {
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: "JWT token missing",
-    //   });
-    // }
-
     // decoding the user from token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 

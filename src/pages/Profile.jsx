@@ -58,7 +58,7 @@ const Profile = () => {
           placeholder='Your Name'
           className='p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500'
           value={name}
-          onChange={(e)=>e.target.value}
+          onChange={(e)=>setName(e.target.value)}
           />
 
           <textarea
@@ -81,4 +81,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Profile;

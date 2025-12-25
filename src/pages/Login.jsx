@@ -29,7 +29,7 @@ const Login = () => {
     <div className='min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl'>
       {/* left side */}
       <div>
-        <img src={Logo} alt="Logo" className="w-[min(30vw,250px)]"/>
+        <img src={Logo} alt="Logo" className="w-[min(30vw,250px)] animate-bounce transition-all duration-300"/>
         <p className="py-3 px-2 text-center text-5xl font-medium">Quick Chat</p>
       </div>
       

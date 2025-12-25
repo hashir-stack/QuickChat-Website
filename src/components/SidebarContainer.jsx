@@ -3,52 +3,64 @@ import Logo from "../assets/quickChatLogo.webp";
 import { TiThMenu } from "react-icons/ti";
 import { FaSearch } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { ChatContext } from "../../context/ChatContext";
 
-const dummyUser = [
-  {
-    id: 1,
-    email: "alice.smith@example.com",
-    fullname: "Alice Smith",
-    profilepic: "https://randomuser.me/api/portraits/women/1.jpg",
-    bio: "Frontend developer passionate about creating intuitive user interfaces.",
-  },
-  {
-    id: 2,
-    email: "john.doe@example.com",
-    fullname: "John Doe",
-    profilepic: "https://randomuser.me/api/portraits/men/2.jpg",
-    bio: "Backend engineer specializing in Node.js and scalable APIs.",
-  },
-  {
-    id: 3,
-    email: "emma.jones@example.com",
-    fullname: "Emma Jones",
-    profilepic: "https://randomuser.me/api/portraits/women/3.jpg",
-    bio: "UI/UX designer focused on accessibility and user-centered design.",
-  },
-  {
-    id: 4,
-    email: "michael.brown@example.com",
-    fullname: "Michael Brown",
-    profilepic: "https://randomuser.me/api/portraits/men/4.jpg",
-    bio: "Full-stack developer with a love for solving complex problems.",
-  },
-  {
-    id: 5,
-    email: "sophia.wilson@example.com",
-    fullname: "Sophia Wilson",
-    profilepic: "https://randomuser.me/api/portraits/women/5.jpg",
-    bio: "Digital marketer exploring the intersection of technology and storytelling.",
-  },
-];
+// const dummyUser = [
+//   {
+//     _id: 1,
+//     email: "alice.smith@example.com",
+//     fullName: "Alice Smith",
+//     profilepic: "https://randomuser.me/api/portraits/women/1.jpg",
+//     bio: "Frontend developer passionate about creating intuitive user interfaces.",
+//   },
+//   {
+//     _id: 2,
+//     email: "john.doe@example.com",
+//     fullName: "John Doe",
+//     profilepic: "https://randomuser.me/api/portraits/men/2.jpg",
+//     bio: "Backend engineer specializing in Node.js and scalable APIs.",
+//   },
+//   {
+//     _id: 3,
+//     email: "emma.jones@example.com",
+//     fullName: "Emma Jones",
+//     profilepic: "https://randomuser.me/api/portraits/women/3.jpg",
+//     bio: "UI/UX designer focused on accessibility and user-centered design.",
+//   },
+//   {
+//     _id: 4,
+//     email: "michael.brown@example.com",
+//     fullName: "Michael Brown",
+//     profilepic: "https://randomuser.me/api/portraits/men/4.jpg",
+//     bio: "Full-stack developer with a love for solving complex problems.",
+//   },
+//   {
+//     _id: 5,
+//     email: "sophia.wilson@example.com",
+//     fullName: "Sophia Wilson",
+//     profilepic: "https://randomuser.me/api/portraits/women/5.jpg",
+//     bio: "Digital marketer exploring the intersection of technology and storytelling.",
+//   },
+// ];
 
-const SidebarContainer = ({ selectedUser, setSelectedUser }) => {
+const SidebarContainer = () => {
 
-  const {logout} = useContext(AuthContext);
+  const {logout , onlineUsers} = useContext(AuthContext);
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [input,setInput] = useState("");
+
+  const {getUsers ,users,
+    selectedUser,setSelectedUser,
+    unseenMessages,setUnseenMessages
+  } = useContext(ChatContext);
+
+  const filteredUsers = input ? users.filter((user)=>user.fullName.toLowerCase().includes(input.toLowerCase())) : users;
+
+  useEffect(()=>{
+    getUsers();
+  },[onlineUsers])
 
   return (
     <div
@@ -76,26 +88,6 @@ const SidebarContainer = ({ selectedUser, setSelectedUser }) => {
               className="cursor-pointer text-sm">Logout</p>
             </div>
           </div>
-          {/* Menu toggle */}
-          {/* <div className="relative py-2">
-            <TiThMenu
-              fontSize={32}
-              className="max-h-5 cursor-pointer"
-              onClick={() => setMenuOpen(!menuOpen)}
-            />
-            {menuOpen && (
-              <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-gray-600 border border-gray-600 text-gray-100">
-                <p
-                  onClick={() => navigate("/profile")}
-                  className="cursor-pointer text-sm"
-                >
-                  Edit Profile
-                </p>
-                <hr className="my-2 border-t border-gray-500" />
-                <p className="cursor-pointer text-sm">Logout</p>
-              </div>
-            )}
-          </div> */}
         </div>
 
         {/* search section */}
@@ -105,43 +97,45 @@ const SidebarContainer = ({ selectedUser, setSelectedUser }) => {
             type="text"
             className="bg-transparent border-none outline-none text-white text-xs placeholder-[#c8c8c8] flex-1"
             placeholder="Search User..."
+            onChange={(e)=>setInput(e.target.value)}
           />
         </div>
       </div>
 
       <div className="flex flex-col gap-2">
-        {dummyUser.map((user, index) => (
+        {filteredUsers.map((user) => (
           <div
-            key={user.id}
+            key={user._id}
             onClick={() => {
               setSelectedUser(user);
+              setUnseenMessages((prev)=>({...prev,[user?._id] : 0}));
             }}
             className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${
-              selectedUser?.id === user.id && "bg-[#282142]/50"
+              selectedUser?._id === user._id && "bg-[#282142]/50"
             }`}
           >
-            {user?.profilepic ? (
+            {user?.profilePic ? (
               <img
-                src={user.profilepic}
+                src={user?.profilePic}
                 alt="Profile Pic"
-                className="w-[45px] aspect-square rounded-full"
+                className="w-[45px] aspect-square rounded-full object-cover"
               />
             ) : (
               <RxAvatar className="w-[45px] h-[45px]" />
             )}
 
             <div className="flex flex-col leading-5">
-              <p>{user?.fullname}</p>
-              {index < 3 ? (
+              <p>{user?.fullName}</p>
+              {onlineUsers.includes(user._id) ? (
                 <span className="text-green-400 text-xs">Online</span>
               ) : (
                 <span className="text-neutral-400 text-xs">Offline</span>
               )}
             </div>
 
-            {index > 2 && (
-              <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50">
-                {index}
+            {(unseenMessages?.[user._id] ?? 0) > 0 && (
+              <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50 text-white">
+                {unseenMessages[user._id]}
               </p>
             )}
           </div>
