@@ -194,7 +194,7 @@ const ChatContainer = () => {
     </div>
   ) : (
     <div className="flex flex-col items-center justify-center gap-2 text-gray-500 bg-white/10 max-md:hidden">
-      <img src={"/quickchatLogo.webp"} alt="Logo Icon" className="max-w-44 animate-bounce transition-all duration-300" />
+      <img src={"/quickChatLogo.webp"} alt="Logo Icon" className="max-w-44 animate-bounce transition-all duration-300" />
       <p className="text-lg font-medium text-white">Chat AnyTime , Anywhere</p>
     </div>
   );
