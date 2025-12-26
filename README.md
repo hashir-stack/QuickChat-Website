@@ -1,16 +1,53 @@
-# React + Vite
+# QuickChat Website 💬
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+QuickChat is a full‑stack real‑time chat application built with **React + Vite** on the frontend and a **Node.js/Express/MongoDB** backend. It supports user authentication, profile management, and live messaging with a clean UI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+- 🔐 **Authentication** – Sign up, login, and secure sessions
+- 👤 **Profile Management** – Update name, bio, and profile picture
+- 💬 **Real‑time Chat** – Send and receive messages instantly
+- 🎨 **Responsive UI** – Tailwind CSS for modern design
+- 🌐 **Deployment Ready** – Frontend on Vercel, backend on Render
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
+**Frontend**
+- React 18
+- Vite
+- Tailwind CSS
+- React Router
 
-## Expanding the ESLint configuration
+**Backend**
+- Node.js + Express
+- MongoDB (Mongoose)
+- JWT Authentication
+- Socket.io (for real‑time messaging)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Deployment**
+- Vercel (Frontend)
+- Render (Backend)
+
+## 📂 Project Structure
+QuickChat-Website/ ├── public/              # Static assets (profileIcon, logos, etc.) ├── src/ │   ├── assets/          # UI images/icons │   ├── components/      # Reusable React components │   ├── pages/           # Page-level components (Profile, Chat, etc.) │   ├── context/         # AuthContext for global state │   ├── App.jsx          # Root component │   └── main.jsx         # Entry point ├── vercel.json          # Vercel rewrites config └── package.json
+
+
+## ⚙️ Setup & Installation
+
+Clone the repo:
+```bash
+git clone https://github.com/hashir-stack/QuickChat-Website.git
+cd QuickChat-Website
+
+Install dependencies:npm install
+Run locally:npm run dev
+Build for production:npm run build
+
+🧑‍💻 Author
+Mohd. Hashir
+Persistent full‑stack developer passionate about building scalable, user‑friendly apps.
+
+📜 License
+This project is licensed under the MIT License.
