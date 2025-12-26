@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import ProfileIcon from "../assets/profileIcon.png";
+// import ProfileIcon from "../assets/profileIcon.png";
 import { useNavigate } from 'react-router-dom';
 import Logo from "../assets/quickChatLogo.webp";
 import { AuthContext } from '../../context/AuthContext';
