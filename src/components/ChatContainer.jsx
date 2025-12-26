@@ -3,7 +3,7 @@ import { LuBadgeInfo } from "react-icons/lu";
 import { IoMdArrowBack } from "react-icons/io";
 import { GrGallery } from "react-icons/gr";
 import { IoIosSend } from "react-icons/io";
-import LogoImg from "../assets/quickchatLogo.webp";
+// import LogoImg from "../assets/quickchatLogo.webp";
 // import UserImage from "../assets/profileIcon.png";
 import { formatMessageTime } from "../lib/utils";
 import { AuthContext } from "../../context/AuthContext";
