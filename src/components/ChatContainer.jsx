@@ -4,7 +4,7 @@ import { IoMdArrowBack } from "react-icons/io";
 import { GrGallery } from "react-icons/gr";
 import { IoIosSend } from "react-icons/io";
 import LogoImg from "../assets/quickchatLogo.webp";
-import UserImage from "../assets/profileIcon.png";
+// import UserImage from "../assets/profileIcon.png";
 import { formatMessageTime } from "../lib/utils";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
@@ -101,7 +101,7 @@ const ChatContainer = () => {
           className="md:hidden max-w-7"
         />
         <img
-          src={selectedUser?.profilePic || UserImage}
+          src={selectedUser?.profilePic || "/profileIcon.png"}
           alt="profilePic"
           className="w-8 rounded-full aspect-square object-cover"
         />
@@ -148,8 +148,8 @@ const ChatContainer = () => {
               <img
                 src={
                   msg.senderId === authUser?._id
-                    ? authUser?.profilePic || UserImage
-                    : selectedUser?.profilePic || UserImage
+                    ? authUser?.profilePic || "/profileIcon.png"
+                    : selectedUser?.profilePic || "/profileIcon.png"
                 }
                 alt=""
                 className="w-4 aspect-square rounded-full object-cover"
@@ -194,7 +194,7 @@ const ChatContainer = () => {
     </div>
   ) : (
     <div className="flex flex-col items-center justify-center gap-2 text-gray-500 bg-white/10 max-md:hidden">
-      <img src={LogoImg} alt="Logo Icon" className="max-w-44 animate-bounce transition-all duration-300" />
+      <img src={"/quickchatLogo.webp"} alt="Logo Icon" className="max-w-44 animate-bounce transition-all duration-300" />
       <p className="text-lg font-medium text-white">Chat AnyTime , Anywhere</p>
     </div>
   );
