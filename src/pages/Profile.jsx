@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import ProfileIcon from "../../src/assets/profileIcon.png";
+import ProfileIcon from "../assets/profileIcon.png";
 import { useNavigate } from 'react-router-dom';
 import Logo from "../assets/quickChatLogo.webp";
 import { AuthContext } from '../../context/AuthContext';
@@ -48,7 +48,7 @@ const Profile = () => {
             hidden
             onChange={(e)=>setSelectedImg(e.target.files[0])}
             />
-            <img src={selectedImg ? URL.createObjectURL(selectedImg) : ProfileIcon} alt="" className={`w-12 h-12 ${selectedImg && 'rounded-full'}`} />
+            <img src={selectedImg ? URL.createObjectURL(selectedImg) : "/profileIcon.png"} alt="" className={`w-12 h-12 ${selectedImg && 'rounded-full'}`} />
             Upload Profile Image
           </label>
 
